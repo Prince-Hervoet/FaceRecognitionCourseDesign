@@ -1,6 +1,7 @@
 import config
 import cv2
 import os
+import shutil
 
 # 图片路径
 kPhotosPath = config.kPhotosPath
@@ -18,9 +19,15 @@ def getPhotoDirName():
     return ans
 
 
+# 清空旧的图片
+def clearOldPhotos():
+    shutil.rmtree(kSolvedPhotosPath)
+    os.mkdir(kSolvedPhotosPath)
+
+
 # 遍历数据集的图片，截取人脸
 def locateFace():
-    count = 1  # 简单计数
+    clearOldPhotos()
     dirNames = getPhotoDirName()
     for dirName in dirNames:
         currentDirPath = os.path.join(kPhotosPath, dirName + os.sep)
@@ -36,8 +43,7 @@ def locateFace():
                 os.makedirs(targetDirPath)
             for x, y, w, h in faceBox:
                 cv2.imwrite(
-                    os.path.join(targetDirPath, str(count) + "_" + fileName),
+                    os.path.join(targetDirPath, fileName),
                     gray[y : y + h, x : x + w],
                 )
-            count += 1
             print("采样成功: " + dirName + " -- " + fileName)
