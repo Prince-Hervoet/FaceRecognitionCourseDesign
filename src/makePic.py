@@ -1,7 +1,7 @@
 import config
 import cv2
 import os
-import shutil
+import util
 
 # 图片路径
 kPhotosPath = config.kPhotosPath
@@ -9,26 +9,10 @@ kSolvedPhotosPath = config.kSolvedPhotosPath
 kFaceCascade = config.kFaceCascade
 
 
-def getPhotoDirName():
-    children = os.listdir(kPhotosPath)
-    ans = []
-    for file in children:
-        if os.path.isfile(os.path.join(kPhotosPath, file)):
-            continue
-        ans.append(file)
-    return ans
-
-
-# 清空旧的图片
-def clearOldPhotos():
-    shutil.rmtree(kSolvedPhotosPath)
-    os.mkdir(kSolvedPhotosPath)
-
-
 # 遍历数据集的图片，截取人脸
 def locateFace():
-    clearOldPhotos()
-    dirNames = getPhotoDirName()
+    util.clearOldPhotos(kSolvedPhotosPath)
+    dirNames = util.getPhotoDirName(kPhotosPath)
     for dirName in dirNames:
         currentDirPath = os.path.join(kPhotosPath, dirName + os.sep)
         targetDirPath = os.path.join(kSolvedPhotosPath, dirName + os.sep)

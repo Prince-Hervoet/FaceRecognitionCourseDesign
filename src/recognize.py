@@ -21,6 +21,9 @@ def recognize():
         matLikeImg = cv2.imread(os.path.join(kTestSetPath, fileName))
         gray = cv2.cvtColor(matLikeImg, cv2.COLOR_BGR2GRAY)
         faceBox = kFaceCascade.detectMultiScale(gray)  # 获得脸部位置信息
+        if len(faceBox) == 0:
+            print("根据 " + fileName + " 检测到: " + "unknown")
+            continue
         for x, y, w, h in faceBox:
             # goal越大越不相似
             id, goal = recognizer.predict(gray[y : y + h, x : x + w])

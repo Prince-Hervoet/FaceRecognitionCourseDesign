@@ -2,6 +2,7 @@ import config
 import os
 import numpy
 import cv2
+import util
 
 # 图片路径
 kPhotosPath = config.kPhotosPath
@@ -10,19 +11,10 @@ kFaceCascade = config.kFaceCascade
 kTrainDataPath = config.kTrainDataPath
 
 
-def getPhotoDirName():
-    children = os.listdir(kPhotosPath)
-    ans = []
-    for file in children:
-        if os.path.isfile(os.path.join(kPhotosPath, file)):
-            continue
-        ans.append(file)
-    return ans
-
-
 def trainData():
+    util.clearOldPhotos(kTrainDataPath)
+    dirNames = util.getPhotoDirName(kPhotosPath)
     count = 1
-    dirNames = getPhotoDirName()
     faceDataList = []
     faceIdList = []
     nameToid = {}
