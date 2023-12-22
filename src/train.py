@@ -13,7 +13,7 @@ kTrainDataPath = config.kTrainDataPath
 
 def trainData():
     util.clearOldPhotos(kTrainDataPath)
-    dirNames = util.getPhotoDirName(kPhotosPath)
+    dirNames = util.getPhotoDirName(kSolvedPhotosPath)
     count = 1
     faceDataList = []
     faceIdList = []
