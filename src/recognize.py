@@ -32,23 +32,20 @@ def recognizeFromFiles():
     for fileName in fileNames:
         matLikeImg = cv2.imread(os.path.join(kTestSetPath, fileName))
         matLikeImgInfos.append([fileName, matLikeImg])
-    ans, imgToFaceBox = recognizeAnalyse(matLikeImgInfos, idToName, recognizer)
+    ans = recognizeAnalyse(matLikeImgInfos, idToName, recognizer)
     for key in ans:
         print(key + " -- " + str(ans[key]))
 
 
 # 从内存数据中识别
-def recognizeFromData(matLikeImgInfo, idToName, recognizer):
-    ans, imgToFaceBox = recognizeAnalyse([matLikeImgInfo], idToName, recognizer)
-    for info in ans:
-        img = util.drawFaceBox(info[1], imgToFaceBox, matLikeImgInfo[1])
-        cv2.imwrite(util.getUUIDStr() + ".jpg", img)
+def recognizeFromData(matLikeImg, idToName, recognizer):
+    imgName = util.getUUIDStr()
+    return recognizeAnalyse([[imgName, matLikeImg]], idToName, recognizer)
 
 
 # 识别测试数据集中的人脸
 def recognizeAnalyse(matLikeImgInfos, idToName, recognizer):
     ans = {}
-    imgToFaceBox = {}
     for matLikeImgInfo in matLikeImgInfos:
         if len(matLikeImgInfo) < 2:
             print("传入参数有误")
@@ -58,16 +55,16 @@ def recognizeAnalyse(matLikeImgInfos, idToName, recognizer):
         peopleName = config.kUnknownStr
         gray = cv2.cvtColor(matLikeImg, cv2.COLOR_BGR2GRAY)
         faceBox = kFaceCascade.detectMultiScale(gray)  # 获得脸部位置信息
-        imgToFaceBox[imgName] = faceBox
         if not imgName in ans:
             ans[imgName] = []
         if len(faceBox) == 0:
-            ans[imgName].append(peopleName)
+            ans[imgName].append([peopleName, None])
             continue
-        for x, y, w, h in faceBox:
+        for index in range(len(faceBox)):
+            (x, y, w, h) = faceBox[index]
             # goal越大越不相似
             id, goal = recognizer.predict(gray[y : y + h, x : x + w])
-            if goal <= 80:
+            if goal <= 50:
                 peopleName = idToName.get(id)
-            ans[imgName].append(peopleName)
-    return ans, imgToFaceBox
+            ans[imgName].append([peopleName, faceBox[index]])
+    return ans
