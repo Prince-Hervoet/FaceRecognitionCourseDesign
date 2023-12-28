@@ -1,5 +1,5 @@
 # Face_recognition_course_design
-
+简单的人脸识别课设项目
 Face recognition course design:
 + config.py -- 配置各种操作的目录路径
 + makePic.py -- 用于从数据集中截取出人脸并保存
