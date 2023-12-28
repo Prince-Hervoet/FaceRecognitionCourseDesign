@@ -27,7 +27,7 @@ def getUUIDStr():
     return str(uuid.uuid1())
 
 
-# 绘制人脸框，返回一个副本图片
+# 绘制人脸框
 # name 人名
 # faceBox 人脸位置信息
 # sourceMatLikeImg 原始Matlike类型的图片
