@@ -13,10 +13,8 @@ def openVideo():
         if not ok:
             break
         oneFaceBox = locateFace.locateOneFace(matLikeImg)
-        if oneFaceBox is None:
-            continue
-        drawImg = util.drawFaceBox(config.kUnknownStr, oneFaceBox, matLikeImg)
-        cv2.imshow("video", drawImg)
+        util.drawFaceBox(config.kUnknownStr, oneFaceBox, matLikeImg)
+        cv2.imshow("video", matLikeImg)
         key = cv2.waitKey(1)
         if key & 0xFF == ord("q"):
             break

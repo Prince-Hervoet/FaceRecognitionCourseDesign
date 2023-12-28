@@ -33,7 +33,7 @@ def getUUIDStr():
 # sourceMatLikeImg 原始Matlike类型的图片
 def drawFaceBox(name, oneFaceBox, sourceMatLikeImg):
     if oneFaceBox is None or len(oneFaceBox) == 0:
-        return
+        return sourceMatLikeImg
     (x, y, w, h) = oneFaceBox
     cv2.rectangle(sourceMatLikeImg, (x, y), (x + w, y + h), color=(0, 0, 255))
     font = cv2.FONT_HERSHEY_SIMPLEX
