@@ -1,6 +1,8 @@
-import makePic
+import locateFace
 import train
 import recognize
+import cv2
+
 
 while True:
     print("====================================================")
@@ -12,12 +14,10 @@ while True:
     print("====================================================")
     choice = input("              请选择: ")
     if choice == "1":
-        makePic.locateFace()
-        print("处理完成")
+        locateFace.locateFaceFromFiles()
     elif choice == "2":
         train.trainData()
-        print("处理完成")
     elif choice == "3":
-        recognize.recognize()
+        recognize.recognizeFromFiles()
     else:
         break

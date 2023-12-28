@@ -12,5 +12,7 @@ kTestSetPath = "../testSet/"
 kTrainDataFileName = "train.xml"
 # 名称和id映射文件名
 kIdToNameFileName = "idToName"
+# 未知人名字符串
+kUnknownStr = "unknown"
 # 脸部识别分类器路径
 kFaceCascade = cv2.CascadeClassifier("./classifiers/haarcascade_frontalface_alt2.xml")
