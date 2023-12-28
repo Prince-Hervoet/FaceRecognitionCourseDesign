@@ -64,7 +64,7 @@ def recognizeAnalyse(matLikeImgInfos, idToName, recognizer):
             (x, y, w, h) = faceBox[index]
             # goal越大越不相似
             id, goal = recognizer.predict(gray[y : y + h, x : x + w])
-            if goal <= 60:
+            if goal <= 70:
                 peopleName = idToName.get(id)
             ans[imgName].append([peopleName, faceBox[index]])
     return ans
