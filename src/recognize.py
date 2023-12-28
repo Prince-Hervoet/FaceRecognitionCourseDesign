@@ -52,15 +52,15 @@ def recognizeAnalyse(matLikeImgInfos, idToName, recognizer):
             continue
         imgName = matLikeImgInfo[0]
         matLikeImg = matLikeImgInfo[1]
-        peopleName = config.kUnknownStr
         gray = cv2.cvtColor(matLikeImg, cv2.COLOR_BGR2GRAY)
         faceBox = kFaceCascade.detectMultiScale(gray)  # 获得脸部位置信息
         if not imgName in ans:
             ans[imgName] = []
         if len(faceBox) == 0:
-            ans[imgName].append([peopleName, None])
+            ans[imgName].append([config.kUnknownStr, None])
             continue
         for index in range(len(faceBox)):
+            peopleName = config.kUnknownStr
             (x, y, w, h) = faceBox[index]
             # goal越大越不相似
             id, goal = recognizer.predict(gray[y : y + h, x : x + w])
