@@ -45,3 +45,17 @@ def drawFaceBox(name, faceBox, sourceMatLikeImg):
         )
         cv2.putText(ectypeImg, name, (x, y - textSize[1]), font, 1, (255, 255, 255), 2)
     return ectypeImg
+
+
+# 获取最大的人脸
+def getMaxFaceBox(faceBox):
+    if len(faceBox) < 2:
+        return faceBox
+    maxArea = 0
+    ansIndex = 0
+    for index, (x, y, w, h) in enumerate(faceBox):
+        area = w * h
+        if area > maxArea:
+            maxArea = area
+            ansIndex = index
+    return [faceBox[ansIndex]]
