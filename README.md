@@ -1,6 +1,6 @@
-# Face_recognition_course_design
+# FaceRecognitionCourseDesign
 简单的人脸识别课设项目
-Face recognition course design:
+FaceRecognitionCourseDesign:
 + config.py -- 配置各种操作的目录路径
 + locateFace.py -- 用于从数据集中截取出人脸并保存
 + recognize.py -- 用于从 testSet 中识别出人脸并打印
