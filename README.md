@@ -14,6 +14,11 @@ FaceRecognitionCourseDesign:
 
 使用方式：执行python main.py进行训练或者手动录入，执行python video.py进行摄像头录入或者识别
 
+所需依赖：
++ opencv-python
++ opencv-contrib-python
++ numpy
+
 > 数据集应采用一个人一个文件夹的方式，文件夹的名称将作为这个人的名称标识
 > 例如 Tom -- Tom_1.png Tom_2.png
 
