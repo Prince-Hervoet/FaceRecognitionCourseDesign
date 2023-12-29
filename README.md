@@ -15,3 +15,5 @@ FaceRecognitionCourseDesign:
 > 数据集应采用一个人一个文件夹的方式，文件夹的名称将作为这个人的名称标识
 > 例如 Tom -- Tom_1.png Tom_2.png
 
+> 代码中含有命令行操作和开启摄像头操作两套
+
