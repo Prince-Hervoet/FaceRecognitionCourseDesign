@@ -32,39 +32,29 @@ def recognizeFromFiles():
     for fileName in fileNames:
         matLikeImg = cv2.imread(os.path.join(kTestSetPath, fileName))
         matLikeImgInfos.append([fileName, matLikeImg])
-    ans = recognizeAnalyse(matLikeImgInfos, idToName, recognizer)
-    for key in ans:
-        print(key + " -- " + str(ans[key]))
+        ans = recognizeAnalyse(matLikeImg, idToName, recognizer)
+        for info in ans:
+            print("根据 " + fileName + " 识别到: " + info["name"])
 
 
 # 从内存数据中识别
 def recognizeFromData(matLikeImg, idToName, recognizer):
-    imgName = util.getUUIDStr()
-    return recognizeAnalyse([[imgName, matLikeImg]], idToName, recognizer)
+    return recognizeAnalyse(matLikeImg, idToName, recognizer)
 
 
 # 识别测试数据集中的人脸
-def recognizeAnalyse(matLikeImgInfos, idToName, recognizer):
-    ans = {}
-    for matLikeImgInfo in matLikeImgInfos:
-        if len(matLikeImgInfo) < 2:
-            print("传入参数有误")
-            continue
-        imgName = matLikeImgInfo[0]
-        matLikeImg = matLikeImgInfo[1]
-        gray = cv2.cvtColor(matLikeImg, cv2.COLOR_BGR2GRAY)
-        faceBox = kFaceCascade.detectMultiScale(gray)  # 获得脸部位置信息
-        if not imgName in ans:
-            ans[imgName] = []
-        if len(faceBox) == 0:
-            ans[imgName].append([config.kUnknownStr, None])
-            continue
-        for index in range(len(faceBox)):
-            peopleName = config.kUnknownStr
-            (x, y, w, h) = faceBox[index]
-            # goal越大越不相似
-            id, goal = recognizer.predict(gray[y : y + h, x : x + w])
-            if goal <= 70:
-                peopleName = idToName.get(id)
-            ans[imgName].append([peopleName, faceBox[index]])
+def recognizeAnalyse(matLikeImg, idToName, recognizer):
+    ans = []
+    faceBox = util.getFace(matLikeImg)
+    if len(faceBox) == 0:
+        return ans
+    for index in range(len(faceBox)):
+        peopleName = config.kUnknownStr
+        (x, y, w, h) = faceBox[index]
+        # goal越大越不相似
+        gray = util.getGray(matLikeImg)
+        id, goal = recognizer.predict(gray[y : y + h, x : x + w])
+        if goal <= 70:
+            peopleName = idToName.get(id)
+        ans.append({"name": peopleName, "oneFaceBox": faceBox[index]})
     return ans

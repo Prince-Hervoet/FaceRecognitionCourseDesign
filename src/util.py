@@ -58,6 +58,11 @@ def getFace(matLikeImg):
     return faceBox
 
 
+def getGray(matLikeImg):
+    gray = cv2.cvtColor(matLikeImg, cv2.COLOR_BGR2GRAY)
+    return gray
+
+
 # 获取最大的人脸
 def getMaxFaceBox(faceBox):
     if len(faceBox) < 2:

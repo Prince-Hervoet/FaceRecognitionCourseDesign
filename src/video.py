@@ -32,13 +32,11 @@ def videoRecognize():
         if not ok:
             break
         ans = recognize.recognizeFromData(matLikeImg, idToName, recognizer)
-        for key in ans:
-            peopleInfos = ans[key]
-            for peopleInfo in peopleInfos:
-                peopleName = peopleInfo[0]
-                oneFaceBox = peopleInfo[1]
-                util.drawFaceBox(peopleName, oneFaceBox, matLikeImg)
-            cv2.imshow("video", matLikeImg)
+        for info in ans:
+            peopleName = info["name"]
+            oneFaceBox = info["oneFaceBox"]
+            util.drawFaceBox(peopleName, oneFaceBox, matLikeImg)
+        cv2.imshow("video", matLikeImg)
         key = cv2.waitKey(1)
         if key & 0xFF == ord("q"):
             break
